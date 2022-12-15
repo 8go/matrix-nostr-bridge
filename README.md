@@ -41,9 +41,32 @@ flowchart BT
   A((Matrix-network)) -- some Matrix message --> B(matrix-commander with --listen) -- via pipe --> J{filter and customize} -- via pipe --> C(nostr-commander with --publish) -- some Nostr note --> D((Nostr-network))
   end
 ```
+# Running It
+
+After having done the initial `matrix-commander` configuration like `--login` and `--verify`, and 
+having done the initial `nostr-commander` configuration like `--create-user`, `--subscribe-author`, `--subscribe-pubkey`, etc.,
+the simplest set-up to get data from Matrix to Nostr is:
+
+```matrix-commander --listen forever --output text ... other options | nostr-commander --publish '_' ... other options```
+
+Vice versa in the other direction:
+
+```nostr-commander --listen  --output text ... other options | matrix-commander --message '_' ... other options```
+
+And if you have a `filter-and-customize` process, then this turns into:
+
+```matrix-commander --listen forever --output json ... other options | filter-and-customize | nostr-commander --publish '_' ... other options```
+
+and
+
+```nostr-commander --listen  --output json ... other options | filter-and-customize | matrix-commander --message '_' ... other options```
+
 
 # Contribute
 
-The basic functionality and feature set for a Proof-of-concept bridge or a bridge for family-and-friends is there. 
-If you need more feature, please contribute the corresponding code to the corresponding `matrix-commander` and `nostr-commander` repos.
-:clap:
+This tool is more geared towards tinkerers.
+The basic functionality and feature set for a Proof-of-concept bridge
+or a bridge for family-and-friends is there. 
+If you need more feature, please contribute the corresponding code
+to the corresponding `matrix-commander` and `nostr-commander` repos.
+:clap: 
